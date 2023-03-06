@@ -8,7 +8,7 @@ import lombok.Setter;
 public class User {
 
     // identifier
-    private String netID;
+    private String id;
 
     // contact
     private String email;

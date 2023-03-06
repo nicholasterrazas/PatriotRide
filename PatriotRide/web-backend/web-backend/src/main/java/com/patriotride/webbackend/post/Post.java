@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class Post {
 
-    private String postID;
+    private String post_id;
     private String Message;
 
 }

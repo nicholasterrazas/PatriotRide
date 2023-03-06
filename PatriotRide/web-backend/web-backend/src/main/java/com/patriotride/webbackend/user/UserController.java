@@ -6,6 +6,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
 
+
+/**
+ *  UserController Class:
+ *  sends HTTPS  requests
+ *
+ *  CRUD API
+ *  - Create user
+ *  - Read user
+ *  - Update user
+ *  - Delete user
+ *
+ *  Access functionalities running the server and accessing "localhost:8080/users"
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -13,21 +26,15 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-//    // below necessary?? maybe autowired handles it
-//    public UserController(UserService userService){
-//        this.userService = userService;
-//    }
 
     @PostMapping("/create")
     public String createUser(@RequestBody User user) throws ExecutionException, InterruptedException {
         return userService.createUser(user);
     }
 
-
-    //@GetMapping("/get")
     @GetMapping("/get")
-    public User getUser(@RequestParam String netID) throws ExecutionException, InterruptedException {
-        return userService.getUser(netID);
+    public User getUser(@RequestParam String id) throws ExecutionException, InterruptedException {
+        return userService.getUser(id);
     }
 
     @PutMapping("/update")
@@ -36,9 +43,13 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteUser(@RequestParam String netID){
-        return userService.deleteUser(netID);
+    public String deleteUser(@RequestParam String id){
+        return userService.deleteUser(id);
     }
+
+    // Tests Below
+    // |    |    |
+    // v    v    v
 
     @GetMapping("/test")
     public ResponseEntity<String> testGetEndpoint() {

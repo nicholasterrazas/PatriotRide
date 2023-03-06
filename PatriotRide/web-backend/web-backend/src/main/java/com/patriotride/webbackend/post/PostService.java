@@ -10,19 +10,37 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
 
+
+/**
+ *  UserService Class:
+ *  handles Firestore database functionalities for the "posts" database
+ *  "posts" database is a collection of JSON documents
+ *
+ *  JSON body example:
+ *
+ *  {
+ *      "post_id": "",
+ *      "message":"inputted message"
+ *  }
+ *
+ *  PostController catches HTTP requests and uses the "users" database accordingly
+ *
+ *  TODO: Need to add more attributes for posts: likes, dislikes, owner, time posted?
+ *
+ */
 @Service
 public class PostService {
 
     public String createPost(Post post) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(post.getPostID()).set(post);
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("posts").document(post.getPost_id()).set(post);
 
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
-    public Post getPost(String postID) throws ExecutionException, InterruptedException {
+    public Post getPost(String post_id) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        DocumentReference documentReference = dbFirestore.collection("users").document(postID);
+        DocumentReference documentReference = dbFirestore.collection("posts").document(post_id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();
 
@@ -35,12 +53,15 @@ public class PostService {
     }
 
     public String updatePost(Post post) throws ExecutionException, InterruptedException {
-        return "";
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("posts").document(post.getPost_id()).set(post);
+
+        return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
     public String deletePost(String postID){
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = dbFirestore.collection("users").document(postID).delete();
-        return "Successfully deleted" + postID;
+        ApiFuture<WriteResult> writeResult = dbFirestore.collection("posts").document(postID).delete();
+        return "Successfully deleted: " + postID;
     }
 }

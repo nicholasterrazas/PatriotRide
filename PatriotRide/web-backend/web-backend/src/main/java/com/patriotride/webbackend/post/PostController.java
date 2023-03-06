@@ -6,6 +6,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
 
+
+/**
+ *  PostController Class:
+ *  sends HTTPS  requests to "http://localhost:8080/posts"
+ *
+ *  CRUD API
+ *  - Create post
+ *  - Read post
+ *  - Update post
+ *  - Delete post
+ **
+ *  Access functionalities running the server and accessing "localhost:8080/posts"
+ */
 @RestController
 @RequestMapping("/posts")
 public class PostController {
@@ -20,8 +33,8 @@ public class PostController {
 
 
     @GetMapping("/get")
-    public Post getPost(@RequestParam String postID) throws ExecutionException, InterruptedException {
-        return postService.getPost(postID);
+    public Post getPost(@RequestParam String post_id) throws ExecutionException, InterruptedException {
+        return postService.getPost(post_id);
     }
 
     @PutMapping("/update")
@@ -30,9 +43,13 @@ public class PostController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteUser(@RequestParam String netID){
-        return postService.deletePost(netID);
+    public String deleteUser(@RequestParam String post_id){
+        return postService.deletePost(post_id);
     }
+
+    // Tests Below
+    // |    |    |
+    // v    v    v
 
     @GetMapping("/test")
     public ResponseEntity<String> testGetEndpoint() {
