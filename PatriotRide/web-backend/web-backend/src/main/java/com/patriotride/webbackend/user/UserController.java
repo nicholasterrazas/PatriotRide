@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @GetMapping("/get")
-    public User getUser(@RequestParam String id) throws ExecutionException, InterruptedException {
-        return userService.getUser(id);
+    public User getUser(@RequestParam String user_id) throws ExecutionException, InterruptedException {
+        return userService.getUser(user_id);
     }
 
     @PutMapping("/update")
@@ -43,8 +43,8 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteUser(@RequestParam String id){
-        return userService.deleteUser(id);
+    public String deleteUser(@RequestParam String user_id){
+        return userService.deleteUser(user_id);
     }
 
     // Tests Below

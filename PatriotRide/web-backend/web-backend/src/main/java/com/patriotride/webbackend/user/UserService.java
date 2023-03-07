@@ -43,15 +43,15 @@ public class UserService {
         // get instance of Firestore database
         Firestore dbFirestore = FirestoreClient.getFirestore();
 
-        //from the firestore collections
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getId()).set(user);
+        // from the Firestore collections
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getUser_id()).set(user);
 
-        return collectionsApiFuture.get().getUpdateTime().toString();
+        return "Created user, time=" + collectionsApiFuture.get().getUpdateTime().toString();
     }
 
-    public User getUser(String netID) throws ExecutionException, InterruptedException {
+    public User getUser(String user_id) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        DocumentReference documentReference = dbFirestore.collection("users").document(netID);
+        DocumentReference documentReference = dbFirestore.collection("users").document(user_id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();
 
@@ -65,15 +65,15 @@ public class UserService {
 
     public String updateUser(User user) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getId()).set(user);
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getUser_id()).set(user);
 
-        return collectionsApiFuture.get().getUpdateTime().toString();
+        return "Updated user, time=" + collectionsApiFuture.get().getUpdateTime().toString();
     }
 
-    public String deleteUser(String id){
+    public String deleteUser(String user_id){
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = dbFirestore.collection("users").document(id).delete();
-        return "Successfully deleted: " + id;
+        ApiFuture<WriteResult> writeResult = dbFirestore.collection("users").document(user_id).delete();
+        return "Successfully deleted: " + user_id;
     }
 
 

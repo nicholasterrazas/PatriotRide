@@ -3,12 +3,13 @@ package com.patriotride.webbackend.user;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Setter
 @Getter
 public class User {
 
-    // identifier
-    private String id;
+    // user identifier
+    private String user_id;
 
     // contact
     private String email;
@@ -26,9 +27,9 @@ public class User {
     private boolean isBlocked;
 
     // lists
-//    private ArrayList<User> favoriteUsers;
-//    private ArrayList<User> blockedUsers;
-//    private ArrayList<Post> posts;
+    // private List<User> favoriteUsers;
+    // private List<User> blockedUsers;
+    // private List<Post> posts;
 
 
 
