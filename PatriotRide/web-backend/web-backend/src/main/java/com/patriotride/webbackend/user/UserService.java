@@ -1,11 +1,6 @@
 package com.patriotride.webbackend.user;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
-import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
@@ -13,69 +8,43 @@ import java.util.concurrent.ExecutionException;
 
 /**
  *  UserService Class:
- *  handles Firestore database functionalities for the "users" database
- *  "users" database is a collection of JSON documents
+ *  handles business logic for the User class
  *
- *  JSON body example:
- *
- *  {
- *      "id": "jdoe123",
- *      "email": "jdoe123@gmu.edu",
- *      "firstName": "john",
- *      "lastName": "doe",
- *      "zipCode": "22",
- *      "isDriver": true,
- *      "isRider": false,
- *      "rating": true,
- *      "isFavorite": false,
- *      "isBlocked": false
- *  }
- *
- *   UserController catches HTTP requests and uses the "users" database accordingly
- *
- *  TODO: Need to add list attributes for storing favorite users, blocked users, and posts
+ *  TODO: Email validation, rating calculation, rating validation (0<rating<5), more?
  *
  */
 @Service
 public class UserService {
 
+    @Autowired
+    UserRepository userRepository;
+
     public String createUser(User user) throws ExecutionException, InterruptedException {
-        // get instance of Firestore database
-        Firestore dbFirestore = FirestoreClient.getFirestore();
+        // things like email validation might go here
+        //      example:
+        //      if (validEmail(user.getEmail))
+        //          return userRepository.createUser(user);
+        //      else
+        //          return ("Invalid email: " + user.getEmail);
 
-        // from the Firestore collections
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getUser_id()).set(user);
-
-        return "Created user, time=" + collectionsApiFuture.get().getUpdateTime().toString();
+        return userRepository.createUser(user);
     }
 
     public User getUser(String user_id) throws ExecutionException, InterruptedException {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        DocumentReference documentReference = dbFirestore.collection("users").document(user_id);
-        ApiFuture<DocumentSnapshot> future = documentReference.get();
-        DocumentSnapshot document = future.get();
-
-        User user;
-        if (document.exists()){
-            user = document.toObject(User.class);
-            return user;
-        }
-        return null;
+        return userRepository.getUser(user_id);
     }
 
     public String updateUser(User user) throws ExecutionException, InterruptedException {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getUser_id()).set(user);
+        // BUSINESS LOGIC HERE: check or modify user, then update user using below method
 
-        return "Updated user, time=" + collectionsApiFuture.get().getUpdateTime().toString();
+        return userRepository.updateUser(user);
     }
 
     public String deleteUser(String user_id){
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = dbFirestore.collection("users").document(user_id).delete();
-        return "Successfully deleted: " + user_id;
+        return userRepository.deleteUser(user_id);
     }
 
-
+    // other methods that have to do with User business logic goes here
+    // e.g. public boolean validEmail(String email){ return true; }
 
 }

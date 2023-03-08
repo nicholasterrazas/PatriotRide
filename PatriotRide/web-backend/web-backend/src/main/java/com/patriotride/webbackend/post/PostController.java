@@ -9,15 +9,14 @@ import java.util.concurrent.ExecutionException;
 
 /**
  *  PostController Class:
- *  sends HTTPS  requests to "http://localhost:8080/posts"
+ *  Parses HTTP requests and directs them to service layer (business logic)
  *
  *  CRUD API
  *  - Create post
  *  - Read post
  *  - Update post
  *  - Delete post
- **
- *  Access functionalities running the server and accessing "localhost:8080/posts"
+ *
  */
 @RestController
 @RequestMapping("/posts")

@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  *  UserController Class:
- *  sends HTTPS  requests
+ *  Parses HTTP requests and directs them to service layer (business logic)
  *
  *  CRUD API
  *  - Create user
@@ -17,7 +17,6 @@ import java.util.concurrent.ExecutionException;
  *  - Update user
  *  - Delete user
  *
- *  Access functionalities running the server and accessing "localhost:8080/users"
  */
 @RestController
 @RequestMapping("/users")
