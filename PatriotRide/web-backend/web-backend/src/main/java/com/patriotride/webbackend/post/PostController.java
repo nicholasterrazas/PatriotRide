@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -30,7 +31,6 @@ public class PostController {
         return postService.createPost(post);
     }
 
-
     @GetMapping("/get")
     public Post getPost(@RequestParam String post_id) throws ExecutionException, InterruptedException {
         return postService.getPost(post_id);
@@ -44,6 +44,12 @@ public class PostController {
     @DeleteMapping("/delete")
     public String deleteUser(@RequestParam String post_id){
         return postService.deletePost(post_id);
+    }
+
+
+    @GetMapping
+    public List<Post> getAllPosts() throws ExecutionException, InterruptedException {
+        return postService.getAllPosts();
     }
 
     // Tests Below

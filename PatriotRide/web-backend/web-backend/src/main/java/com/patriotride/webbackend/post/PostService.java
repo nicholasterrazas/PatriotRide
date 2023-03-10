@@ -3,6 +3,7 @@ package com.patriotride.webbackend.post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -33,5 +34,9 @@ public class PostService {
 
     public String deletePost(String post_id){
         return postRepository.deletePost(post_id);
+    }
+
+    public List<Post> getAllPosts() throws ExecutionException, InterruptedException {
+        return postRepository.getAllPosts();
     }
 }
