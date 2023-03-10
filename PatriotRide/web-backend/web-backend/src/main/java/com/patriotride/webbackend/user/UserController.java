@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -44,6 +45,11 @@ public class UserController {
     @DeleteMapping("/delete")
     public String deleteUser(@RequestParam String user_id){
         return userService.deleteUser(user_id);
+    }
+
+    @GetMapping("/list")
+    public List<User> getAllUsers() throws ExecutionException, InterruptedException {
+        return userService.getAllUsers();
     }
 
     // Tests Below

@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
  *  JSON body example:
  *
  *  {
- *      "post_id": "",
+ *      "post_id": "post",
  *      "message":"inputted message"
  *  }
  *

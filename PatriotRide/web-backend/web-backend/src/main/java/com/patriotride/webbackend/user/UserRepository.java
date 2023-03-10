@@ -8,6 +8,9 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -18,11 +21,11 @@ import java.util.concurrent.ExecutionException;
  *  JSON body example:
  *
  *  {
- *      "id": "jdoe123",
+ *      "user_id": "jdoe123",
  *      "email": "jdoe123@gmu.edu",
  *      "firstName": "john",
  *      "lastName": "doe",
- *      "zipCode": "22",
+ *      "zipCode": "22030",
  *      "isDriver": true,
  *      "isRider": false,
  *      "rating": true,
@@ -73,4 +76,27 @@ public class UserRepository {
         ApiFuture<WriteResult> writeResult = dbFirestore.collection("users").document(user_id).delete();
         return "Successfully deleted: " + user_id;
     }
+
+    public List<User> getAllUsers() throws ExecutionException, InterruptedException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+
+        Iterable<DocumentReference> documentReference = dbFirestore.collection("users").listDocuments();
+        Iterator<DocumentReference> iterator = documentReference.iterator();
+
+        List<User> userList = new ArrayList<>();
+        User user = null;
+
+        while (iterator.hasNext()){
+            DocumentReference currentDocRef = iterator.next();
+            ApiFuture<DocumentSnapshot> future = currentDocRef.get();
+            DocumentSnapshot document = future.get();
+
+            user = document.toObject(User.class);
+            userList.add(user);
+
+        }
+
+        return userList;
+    }
+
 }

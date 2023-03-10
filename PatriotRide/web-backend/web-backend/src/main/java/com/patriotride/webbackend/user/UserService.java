@@ -3,6 +3,7 @@ package com.patriotride.webbackend.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -42,6 +43,10 @@ public class UserService {
 
     public String deleteUser(String user_id){
         return userRepository.deleteUser(user_id);
+    }
+
+    public List<User> getAllUsers() throws ExecutionException, InterruptedException {
+        return userRepository.getAllUsers();
     }
 
     // other methods that have to do with User business logic goes here
