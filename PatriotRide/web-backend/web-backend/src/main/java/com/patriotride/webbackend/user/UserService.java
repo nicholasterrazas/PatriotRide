@@ -1,5 +1,7 @@
 package com.patriotride.webbackend.user;
 
+import com.patriotride.webbackend.post.Post;
+import com.patriotride.webbackend.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PostService postService;
 
     public String createUser(User user) throws ExecutionException, InterruptedException {
         // things like email validation might go here
@@ -47,6 +52,20 @@ public class UserService {
 
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
         return userRepository.getAllUsers();
+    }
+
+    public String publishPost(String user_id, Post post) throws ExecutionException, InterruptedException {
+
+        // get user, add post to user's post list, then update user
+        User publisher = userRepository.getUser(user_id);
+        List<Post> posts = publisher.getPosts();
+        posts.add(post);
+        userRepository.updateUser(publisher);
+
+        // add post to "posts" database
+        postService.createPost(post);
+
+        return publisher.getFirstName() + " successfully published post: \"" + post.getMessage()+ "\"";
     }
 
     // other methods that have to do with User business logic goes here

@@ -1,5 +1,6 @@
 package com.patriotride.webbackend.user;
 
+import com.patriotride.webbackend.post.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +51,11 @@ public class UserController {
     @GetMapping("/list")
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
         return userService.getAllUsers();
+    }
+
+    @PostMapping("/publish")
+    public String publishPost(@RequestParam String user_id, @RequestBody Post post) throws ExecutionException, InterruptedException {
+        return userService.publishPost(user_id, post);
     }
 
     // Tests Below
